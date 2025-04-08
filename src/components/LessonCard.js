@@ -9,12 +9,18 @@ class LessonCard extends Component {
     }
 
     render() {
+        const {
+            name,
+            description,
+            // anything
+        } = this.props;
+
         return (
             <div className="lesson-card">
-                <h2>{this.props.name}</h2>
+                <h2>{name}</h2>
                 <div>
                     <p>
-                        Check what we are going to learn under this lesson
+                        {description}
                     </p>
                 </div>
                 <button onClick={() => this.toggleVisibility()}>

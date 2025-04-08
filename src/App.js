@@ -2,8 +2,20 @@
 import './App.css';
 import React from 'react';
 import LessonCard from './components/LessonCard';
+import axios from 'axios';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lessons: []
+        };
+    }
+
+    componentDidMount() {
+        this.getLessons();
+    }
+
     render() {
         return (
             <div className="content-container">
@@ -20,7 +32,9 @@ class App extends React.Component {
                     </div>
                     <div style={{ display: 'flex' }}>
                         {
-                            this.getLessons().map(l => <LessonCard name={l.name} key={l.id}/>)
+                            this.state.lessons.map(l => <LessonCard name={l.text}
+                                key={l.value}
+                                description={l.title} />)
                         }
                     </div>
                 </div>
@@ -30,22 +44,33 @@ class App extends React.Component {
     }
 
     getLessons() {
-        return [{
-            id: '001',
-            name: 'Lesson 1'
-        },
-        {
-            id: '002',
-            name: 'Lesson 2'
-        },
-        {
-            id: '003',
-            name: 'Lesson 3'
-        },
-        {
-            id: '004',
-            name: 'Lesson 4'
-        }]
+        axios.get('https://www.sfu.ca/bin/wcm/course-outlines?2015/summer/cmpt/120/')
+            .then(({ data: lessons }) => {
+                // const {
+                //     data: lessons
+                // } = res;
+                console.log('response: ', lessons);
+                this.setState(prevState => ({ ...prevState, lessons }))
+            })
+            .catch(err => console.error('error: ', err));
+
+
+        // return [{
+        //     id: '001',
+        //     name: 'Lesson 1'
+        // },
+        // {
+        //     id: '002',
+        //     name: 'Lesson 2'
+        // },
+        // {
+        //     id: '003',
+        //     name: 'Lesson 3'
+        // },
+        // {
+        //     id: '004',
+        //     name: 'Lesson 4'
+        // }]
     }
 }
 
