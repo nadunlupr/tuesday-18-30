@@ -1,12 +1,18 @@
 import { Component } from 'react';
+import axios from 'axios';
+import loaderImg from '../assets/images/loader.gif';
 
 class LessonCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isInfoVisible: false
+            isInfoVisible: false,
+            description: undefined
         }
     }
+    // componentDidMount() {
+    //     this.getLessonDetails();
+    // }
 
     render() {
         const {
@@ -31,7 +37,13 @@ class LessonCard extends Component {
                     <div id="moreInfo"
                         className="more-info-panel">
                         <p className="black-text">
-                            If you take the first lesson you can do the second one :)
+                            {
+                                !this.state.description ?
+                                    <div>
+                                        <img src={loaderImg} width='40px' alt='Loading...' />
+                                    </div> :
+                                    <div>{this.state.description}</div>
+                            }
                         </p>
                         <a href="./lesson-page.html">Go to lesson</a>
                     </div>
@@ -41,12 +53,32 @@ class LessonCard extends Component {
         );
     }
 
+    getLessonDetails() {
+        const {
+            id
+        } = this.props;
+        axios.get(`https://www.sfu.ca/bin/wcm/course-outlines?2015/summer/cmpt/120/${id}`)
+            .then(res => {
+                const {
+                    data: {
+                        info: {
+                            description
+                        } = {}
+                    }
+                } = res;
+                console.log(description);
+                this.setState(prevState => ({ ...prevState, description }));
+            })
+            .catch(err => console.error('error: ', err))
+    }
+
     toggleVisibility() {
         this.setState(
             {
                 ...this.state,
                 isInfoVisible: !this.state.isInfoVisible
             })
+        this.getLessonDetails();
     }
 }
 
