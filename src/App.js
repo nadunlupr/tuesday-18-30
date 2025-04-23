@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react';
 import LessonCard from './components/LessonCard';
 import axios from 'axios';
+import Functional from './components/functional-components/Functional';
 
 class App extends React.Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class App extends React.Component {
                                 Let's brush up our html, js and css knowledge
                             </span>
                         </p>
+                    <Functional sampleProp='this is the prop'/>
                     </div>
                     <div style={{ display: 'flex' }}>
                         {

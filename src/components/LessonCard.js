@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios from 'axios';
 import loaderImg from '../assets/images/loader.gif';
+import { Link } from 'react-router';
 
 class LessonCard extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class LessonCard extends Component {
                                     <div>{this.state.description}</div>
                             }
                         </p>
-                        <a href="./lesson-page.html">Go to lesson</a>
+                        <Link to='/lesson'>Go to lesson</Link>
                     </div>
 
                 }
