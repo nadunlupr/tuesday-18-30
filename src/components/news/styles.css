@@ -1,0 +1,10 @@
+.news-create {
+    background: white;
+    margin: 20%;
+    padding: 10px;
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
